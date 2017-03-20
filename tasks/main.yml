@@ -1,0 +1,13 @@
+---
+- name: install percona server
+  yum:
+    name: Percona-Server-server-56
+    state: present
+
+- name: start mysqld service
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- include: rootpw.yml

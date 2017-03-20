@@ -1,0 +1,25 @@
+---
+- name: generate password
+  command: uuidgen
+  args:
+    creates: ~root/.my.cnf
+  register: result
+
+- set_fact:
+    mycnf_opts:
+      user: root
+      password: "{{ result.stdout }}"
+  when: result.changed
+
+- name: set mysql root user password
+  command: mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('{{ mycnf_opts.password }}');"
+  when: result.changed
+
+- name: update ~root/.my.cnf
+  ini_file:
+    dest: ~root/.my.cnf
+    section: mysql
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_dict: "{{ mycnf_opts }}"
+  when: result.changed
