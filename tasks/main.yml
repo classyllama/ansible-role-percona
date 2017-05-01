@@ -4,6 +4,24 @@
     name: Percona-Server-server-56
     state: present
 
+- name: create mysqld tmpdir
+  file:
+    path: "{{ mysqld_tmpdir }}"
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: 0775
+  when: mysqld_create_tmpdir
+
+- name: configure mysqld
+  template:
+    src: my.cnf
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart mysqld
+
 - name: start mysqld service
   service:
     name: mysqld
