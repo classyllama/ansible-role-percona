@@ -20,7 +20,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart mysqld
+  notify: restart mysql
 
 - name: start mysql service
   service:
