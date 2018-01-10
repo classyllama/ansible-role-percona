@@ -30,6 +30,7 @@ mysqld_ignore_db_dir: lost+found
 mysqld_datadir: /var/lib/mysql
 mysqld_tmpdir: /var/lib/mysqltmp
 mysqld_socket: /var/lib/mysql/mysql.sock
+mysqld_default_timezone: +00:00
 
 ## Cache tuning
 mysqld_thread_cache_size: 16
