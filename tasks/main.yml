@@ -28,4 +28,4 @@
     state: started
     enabled: yes
 
-- include: rootpw.yml
+- import_tasks: rootpw.yml
