@@ -19,8 +19,18 @@ mysqld_memory_percentage: 100
 mysqld_memory_divisor: "{{ (ansible_memtotal_mb > 7680) | ternary('1024', '1') }}"
 mysqld_memory_unit: "{{ (ansible_memtotal_mb > 7680) | ternary('G', 'M') }}"
 
-# Create the tmpdir if it doesn't exist
+# Create the tmpdir if it doesn't exist; should be set to "no" when tmpdir path is a symlink (for example)
 mysqld_create_tmpdir: yes
+
+# Set these to "yes" on the master/slave servers of a replicated setup to enable replication setup
+#
+#  mysqld_replication_master: yes     on xyz-db1
+#  mysqld_replication_slave: yes      on xyz-db2
+#
+# Do NOT set these both to "yes" on the *same* server
+#
+mysqld_replication_master: no
+mysqld_replication_slave: no
 
 ##############################
 ## MySQL Configuration
@@ -80,18 +90,18 @@ mysqld_innodb_log_buffer_size: 8M
 mysqld_innodb_file_per_table: 1
 mysqld_innodb_open_files: 300
 
-## Replication (not currently implemented)
-# mysqld_server_id: 1
-# mysqld_log_bin: /var/log/mysql/bin-log
-# mysqld_relay_log: /var/log/mysql/relay-log
-# mysqld_relay_log_space_limit: 16G
-# mysqld_expire_logs_days: 7
-# mysqld_read_only: 1
-# mysqld_sync_binlog: 1
-# mysqld_log_slave_updates: 1
-# mysqld_binlog_format: MIXED
-# mysqld_auto_increment_offset: 1
-# mysqld_auto_increment_increment: 2
+## Replication (some of these are currently not used; see templates for details)
+mysqld_server_id: null    # This must be defined in hostvars for replication setup to succeed
+mysqld_log_bin: /var/lib/mysqllogs/{{ ansible_hostname }}-bin-log
+mysqld_relay_log: /var/lib/mysqllogs/{{ ansible_hostname }}-relay-log
+mysqld_relay_log_space_limit: 16G
+mysqld_expire_logs_days: 7
+mysqld_read_only: 1
+mysqld_sync_binlog: 1
+mysqld_log_slave_updates: 1
+mysqld_binlog_format: ROW
+mysqld_auto_increment_offset: 1
+mysqld_auto_increment_increment: 2
 
 ## Logging
 mysqld_log_output: FILE
@@ -100,8 +110,9 @@ mysqld_slow_query_log_file: /var/log/mysql/{{ ansible_hostname }}-slow-log
 mysqld_long_query_time: 2
 
 ## [mysqld_safe]
-mysqld_safe_log_error: /var/log/mysqld.log
-mysqld_safe_open_files_limit: 65535
+mysqld_log_error: /var/log/mysqld.log
+mysqld_pid_file: /var/run/mysqld/mysqld.pid
+mysqld_open_files_limit: 65535
 
 ## [mysql]
 mysql_no_auto_rehash: yes

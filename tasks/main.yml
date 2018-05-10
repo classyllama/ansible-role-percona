@@ -13,6 +13,16 @@
     mode: 0775
   when: mysqld_create_tmpdir
 
+- name: fail without mysqld_server_id when replication is enabled
+  fail: msg="mysqld_server_id must be set when replication is enabled"
+  when:
+    - mysqld_server_id is none
+    - (mysqld_replication_master or mysqld_replication_slave)
+
+- name: fail when mysqld_replication_master and mysqld_replication_slave are both yes
+  fail: msg="mysqld_replication_master and mysqld_replication_slave cannot both be yes"
+  when: mysqld_replication_master and mysqld_replication_slave
+
 - name: configure mysqld
   template:
     src: my.cnf
@@ -20,6 +30,7 @@
     owner: root
     group: root
     mode: 0644
+    backup: yes
   notify: restart mysql
 
 - name: start mysql service
