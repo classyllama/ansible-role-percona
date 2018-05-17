@@ -1,4 +1,4 @@
-server-id                  = {{ mysqld_server_id | default(1) }}
+server-id                  = {{ mysqld_server_id }}
 log-bin                    = {{ mysqld_log_bin }}
 relay-log                  = {{ mysqld_relay_log }}
 relay-log-space-limit      = {{ mysqld_relay_log_space_limit }}
