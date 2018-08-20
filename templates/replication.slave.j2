@@ -7,5 +7,8 @@ read-only                  = {{ mysqld_read_only }}
 #sync-binlog               = {{ mysqld_sync_binlog }}
 #log-slave-updates         = {{ mysqld_log_slave_updates }}
 binlog-format              = {{ mysqld_binlog_format }}
+{% if mysqld_replicate_wild_ignore_table -%}
+  replicate-wild-ignore-table = {{ mysqld_replicate_wild_ignore_table }}
+{% endif %}
 #auto-increment-offset     = {{ mysqld_auto_increment_offset }}
 #auto-increment-increment  = {{ mysqld_auto_increment_increment }}

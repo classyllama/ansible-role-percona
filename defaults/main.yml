@@ -103,6 +103,11 @@ mysqld_binlog_format: ROW
 mysqld_auto_increment_offset: 1
 mysqld_auto_increment_increment: 2
 
+# Some applications such as Magento use MEMORY tables which may need to be excluded by setting this to something
+# like `%.catalog%_tmp` to cause the slave to filter data written to these tables to avoid replcation failure as
+# a result of a slave restart while there is data in one of the MEMORY tables on the master mysql server
+mysqld_replicate_wild_ignore_table: false
+
 ## Logging
 mysqld_log_output: FILE
 mysqld_slow_query_log: 0
