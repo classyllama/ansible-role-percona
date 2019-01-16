@@ -32,6 +32,8 @@ mysqld_create_tmpdir: yes
 mysqld_replication_master: no
 mysqld_replication_slave: no
 
+mysqld_replicate_wild_ignore_table_patterns: []
+
 ##############################
 ## MySQL Configuration
 
