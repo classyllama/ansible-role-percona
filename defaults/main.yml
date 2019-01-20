@@ -43,6 +43,7 @@ mysqld_datadir: /var/lib/mysql
 mysqld_tmpdir: /var/lib/mysqltmp
 mysqld_socket: /var/lib/mysql/mysql.sock
 mysqld_default_timezone: +00:00
+mysqld_local_infile: no
 
 ## Cache tuning
 mysqld_thread_cache_size: 16
