@@ -113,6 +113,9 @@ mysqld_auto_increment_increment: 2
 # a result of a slave restart while there is data in one of the MEMORY tables on the master mysql server
 mysqld_replicate_wild_ignore_table: false
 
+# Extra MySQL Configs
+mysqld_my_cnf_extras: []
+
 ## Logging
 mysqld_log_output: FILE
 mysqld_slow_query_log: 0
