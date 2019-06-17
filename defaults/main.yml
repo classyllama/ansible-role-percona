@@ -114,7 +114,7 @@ mysqld_auto_increment_increment: 2
 mysqld_replicate_wild_ignore_table: false
 
 # Extra MySQL Configs
-mysqld_my_cnf_extras: []
+mysqld_my_cnf_extras: {}
 
 ## Logging
 mysqld_log_output: FILE
